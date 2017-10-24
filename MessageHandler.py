@@ -12,7 +12,6 @@ def handleMessage(update):
         exit(0)
     else:
         if message['chat']['type'] == 'group':
-            messageToSend = 'Hello ' + message['from']['first_name']
             r = ['Hello ' + message['from']['first_name'], 'You told me "' + message['text'] + '"']
         else:
             r = [Utils.get_chat_id(update), 'You told me "' + message['text'] + '"']
