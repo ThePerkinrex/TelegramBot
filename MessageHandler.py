@@ -8,13 +8,13 @@ def handleMessage(update):
 
     message = update['message']
     if message['text'] == '/stop':
-        Utils.send_mess(Utils.get_chat_id(update), 'Stopping Chatbot')
+        r = ['stopping bot']
         exit(0)
     else:
         if message['chat']['type'] == 'group':
             r = ['Hello ' + message['from']['first_name'], 'You told me "' + message['text'] + '"']
         else:
-            r = [Utils.get_chat_id(update), 'You told me "' + message['text'] + '"']
+            r = ['You told me "' + message['text'] + '"']
             print('Answering ' + str(update['update_id']))
 
     return r

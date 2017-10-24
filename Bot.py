@@ -17,7 +17,7 @@ def main():
     while True:
         update = Utils.last_update(Utils.get_updates_json(url, update_id))
         if update is not None:
-            Utils.send_mess(Utils.get_chat_id(update), MHandler.handleMessage(update))
+            # Utils.send_mess(Utils.get_chat_id(update), MHandler.handleMessage(update))
             mess = MHandler.handleMessage(update)
             for message in mess:
                 Utils.send_mess(Utils.get_chat_id(update), message)
