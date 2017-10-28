@@ -63,12 +63,14 @@ def get_custom_keyboard(buttons, custom=None):
 
 
 def generate_poll(poll_id, options):
+    options.reverse()
     r = '{"inline_keyboard": ['
     for option in options:
         r += '[{"text": "' + option + '", "callback_data": "' + str(poll_id) + ':::' + option + '"}]'
         if options.index(option) < (len(options)-1):
             r += ','
     r += ']}'
+    print(r)
     return r
 
 

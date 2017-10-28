@@ -29,6 +29,7 @@ def main():
                     print('HANDLED_MSG: ' + str(r))
                     response = 'none'
                     for mess in r:
+                        print('MSG: ' + str(mess))
                         if mess == 'NONE':
                             response = None
                             break
