@@ -72,5 +72,5 @@ def get_custom_button(text, custom=None):
 
 
 def get_test_keyboard():
-    return '{"inline_keyboard": [[{"text": "hello", "callback_data": "hello"}]]}'
+    return '{"inline_keyboard": [[{"text": "A", "callback_data": "A"}, {"text": "B", "callback_data": "B"}]]}'
 

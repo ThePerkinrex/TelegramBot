@@ -30,7 +30,12 @@ def main():
                 elif update.get('callback_query'):
                     callback_query = update.get('callback_query')
                     print('CALLBACK_QUERY: ' + str(callback_query))
-
+                    name = 'You'
+                    if callback_query.get('from').get('username'):
+                        name = '@' + callback_query['from']['username']
+                    elif callback_query.get('from').get('first_name'):
+                        name = callback_query.get('from').get('first_name')
+                    Utils.send_mess(callback_query['message']['chat']['id'], name + ' told me ' + callback_query['data'])
                 update_id = Utils.last_update(Utils.get_updates_json(url))['update_id'] + 1
         except KeyboardInterrupt:
             print('END_PRC: STOPPING BOT')
