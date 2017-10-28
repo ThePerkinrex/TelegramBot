@@ -1,6 +1,7 @@
 import requests
+import token
 
-url = "https://api.telegram.org/bot479189806:AAFgwI7drgzRoXTGnoCxgrFyfWcUxKP1Wlc/"
+url = 'https://api.telegram.org/bot' + token.t + '/'  # Your bot's token
 
 
 def get_updates_json(request, offset=None):
@@ -73,4 +74,3 @@ def get_custom_button(text, custom=None):
 
 def get_test_keyboard():
     return '{"inline_keyboard": [[{"text": "A", "callback_data": "A"}, {"text": "B", "callback_data": "B"}]]}'
-
