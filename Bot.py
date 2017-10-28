@@ -15,12 +15,26 @@ def main():
     else:
         update_id = Utils.last_update(Utils.get_updates_json(url))['update_id']
     while True:
-        update = Utils.last_update(Utils.get_updates_json(url, update_id))
-        if update is not None:
-            # Utils.send_mess(Utils.get_chat_id(update), MHandler.handleMessage(update))
-            print(MHandler.handleMessage(update))
+        try:
+            update = Utils.last_update(Utils.get_updates_json(url, update_id))
+            if update is not None:
+                if update.get('message'):
+                    # Utils.send_mess(Utils.get_chat_id(update), MHandler.handleMessage(update))
+                    r = MHandler.handleMessage(update)
+                    print('HANDLED_MSG: ' + str(r))
+                    response = 'none'
+                    for mess in r:
+                        response = Utils.send_mess(Utils.get_chat_id(update), mess[0], mess[1])
 
-            update_id = Utils.last_update(Utils.get_updates_json(url))['update_id'] + 1
+                    print('RESPONSE: ' + str(response.json()))
+                elif update.get('callback_query'):
+                    callback_query = update.get('callback_query')
+                    print('CALLBACK_QUERY: ' + str(callback_query))
+
+                update_id = Utils.last_update(Utils.get_updates_json(url))['update_id'] + 1
+        except KeyboardInterrupt:
+            print('END_PRC: STOPPING BOT')
+            exit(0)
 
 
 if __name__ == '__main__':

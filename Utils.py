@@ -29,8 +29,8 @@ def get_chat_id(update):
 def send_mess(chat, text, custom=None):
     params = {'chat_id': chat, 'text': text}
     if custom is not None:
-        params = {'chat_id': chat, 'text': text, 'reply_markup': {'keyboard': [[{'text': 'A'}]]}}
-    print(params)
+        params = {'chat_id': chat, 'text': text, 'reply_markup': custom}
+    print('SEND_MSG_PARAMS: ' + str(params))
     response = requests.post(url + 'sendMessage', data=params)
     return response
 
@@ -72,5 +72,5 @@ def get_custom_button(text, custom=None):
 
 
 def get_test_keyboard():
-    return requests.get('file:///Users/juan/git/TelegramBot/keyboard.json').json()
+    return '{"inline_keyboard": [[{"text": "hello", "callback_data": "hello"}]]}'
 
