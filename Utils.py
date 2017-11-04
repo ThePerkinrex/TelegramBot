@@ -13,6 +13,7 @@ def r_align(n, t):
             t = ' ' + t
         return t
 
+
 def list_to_lines(l):
     r = ''
     for item in l:
