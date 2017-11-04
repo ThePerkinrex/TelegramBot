@@ -1,3 +1,6 @@
+import sys
+import traceback
+
 import MessageHandler as MHandler
 import Utils
 
@@ -10,7 +13,8 @@ url = "https://api.telegram.org/bot479189806:AAFgwI7drgzRoXTGnoCxgrFyfWcUxKP1Wlc
 
 
 def stop_bot():
-    print('END_PRC: STOPPING BOT')
+    # print('END_PRC: STOPPING BOT')
+    Utils.log_mess('END_PRC', 'Stopping bot', Utils.LogColors.FAIL)
     exit(0)
 
 
@@ -26,25 +30,30 @@ def main():
                 if update.get('message'):
                     # Utils.send_mess(Utils.get_chat_id(update), MHandler.handleMessage(update))
                     r = MHandler.handle_message(update)
-                    print('HANDLED_MSG: ' + str(r))
+                    # print('HANDLED_MSG: ' + str(r))
+                    Utils.log_mess('HANDLED_MSG', str(r))
                     response = 'none'
                     for mess in r:
-                        print('MSG: ' + str(mess))
+                        # print('MSG: ' + str(mess))
+                        Utils.log_mess('MSG', str(mess))
                         if mess == 'NONE':
-                            response = None
+                            response = Utils.send_mess(Utils.get_chat_id(update), )
                             break
                         else:
                             response = Utils.send_mess(Utils.get_chat_id(update), mess[0], mess[1])
                     if response:
-                        print('RESPONSE: ' + str(response.json()))
+                        # print('RESPONSE: ' + str(response.json()))
+                        Utils.log_mess('RESPONSE', str(response.json()), Utils.LogColors.RESPONSE)
                     else:
-                        print('STOPPING')
+                        # print('STOPPING')
                         stop_bot()
                 elif update.get('callback_query'):
                     callback_query = update.get('callback_query')
-                    print('CALLBACK_QUERY: ' + str(callback_query))
+                    # print('CALLBACK: ' + str(callback_query))
+                    Utils.log_mess('CALLBACK', 'Query ' + str(callback_query), Utils.LogColors.OKBLUE)
                     r = MHandler.handle_callback(update)
-                    print('CALLBACK: ' + str(r))
+                    # print('CALLBACK: ' + str(r))
+                    Utils.log_mess('CALLBACK', str(r), Utils.LogColors.OKBLUE)
 
                     # name = 'You'
                     # if callback_query.get('from').get('username'):
@@ -55,6 +64,10 @@ def main():
                 update_id = Utils.last_update(Utils.get_updates_json(url))['update_id'] + 1
         except KeyboardInterrupt:
             stop_bot()
+        except Exception as e:
+            Utils.log_mess('ERROR', str(type(e)) + ' --> ' + str(e), Utils.LogColors.FAIL)
+            Utils.log_mess('ERROR_READOUT', '\n' + Utils.LogColors.FAIL + Utils.list_to_lines(traceback.format_list(traceback.extract_tb(sys.exc_info()[2]))), Utils.LogColors.FAIL)
+            # stop_bot()
 
 
 if __name__ == '__main__':

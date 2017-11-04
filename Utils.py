@@ -2,6 +2,38 @@ import requests
 import bot_token
 
 url = 'https://api.telegram.org/bot' + bot_token.t + '/'  # Your bot's token
+maxlen = 20
+
+
+def r_align(n, t):
+    if len(t) >= n:
+        return t
+    else:
+        while len(t) < n:
+            t = ' ' + t
+        return t
+
+def list_to_lines(l):
+    r = ''
+    for item in l:
+        r += item + '\n'
+    return r
+
+
+class LogColors:
+    HEADER = '\033[95m'  # MSG RELATED
+    OKBLUE = '\033[94m'  # UPDATE & CALLBACK RELATED
+    OKGREEN = '\033[92m'  # POLLS RELATED
+    RESPONSE = '\033[1;36m'  # RESPONSE RELATED
+    WARNING = '\033[93m'  # WARNINGS
+    FAIL = '\033[91m'  # ERRORS & END
+    ENDC = '\033[0m'
+    BOLD = '\033[1m'
+    UNDERLINE = '\033[4m'
+
+
+def log_mess(type_txt, text, typec=LogColors.HEADER):
+    print(typec + r_align(maxlen, type_txt) + ': ' + LogColors.ENDC + text + LogColors.ENDC)
 
 
 def get_updates_json(request, offset=None):
@@ -31,7 +63,8 @@ def send_mess(chat, text, custom=None):
     params = {'chat_id': chat, 'text': text}
     if custom is not None:
         params = {'chat_id': chat, 'text': text, 'reply_markup': custom}
-    print('SEND_MSG_PARAMS: ' + str(params))
+    # print('SEND_MSG_PARAMS: ' + str(params))
+    log_mess('SEND_MSG_PARAMS', str(params))
     response = requests.post(url + 'sendMessage', data=params)
     return response
 
@@ -39,7 +72,8 @@ def send_mess(chat, text, custom=None):
 def send_callback(callbackId, params):
     p = {'callback_query_id': callbackId}
     p.update(params)
-    print('SEND_CALLBACK: Sending callback')
+    # print('SEND_CALLBACK: Sending callback')
+    log_mess('CALLBACK', 'Sending callback', LogColors.OKBLUE)
     return requests.post(url + 'answerCallbackQuery', data=p)
 
 
@@ -70,7 +104,7 @@ def generate_poll(poll_id, options):
         if options.index(option) < (len(options)-1):
             r += ','
     r += ']}'
-    print(r)
+    # print(r)
     return r
 
 

@@ -6,9 +6,10 @@ pollsInEdit = []
 
 
 def handle_message(update):
-    print('UPDATE: ' + str(update))
+    # print('UPDATE: ' + str(update))
+    Utils.log_mess('UPDATE', str(update), Utils.LogColors.OKBLUE)
 
-    r = [('I can crete polls', {})]
+    r = [('Puedo crear encuestas', {})]
 
     message = update['message']
     if message['text'] == '/stop':
@@ -23,14 +24,17 @@ def handle_message(update):
             # print('MSG_RESPONSE: ' + str(update['update_id']))
             regex1 = re.match('la pregunta es (.+)', message['text'].lower())
             regex2 = re.split('\s*,\s*', message['text'])
-            print('MSG_HANDLER: MSG IS ' + message['text'])
+            # print('MSG_HANDLER: MSG IS ' + message['text'])
+            Utils.log_mess('MSG_HANDLER', 'MSG is ' + message['text'])
             if message['text'].lower() == 'crea una encuesta':
-                print('POLLS: CREATE POLL1')
+                # print('POLLS: CREATE POLL1')
+                Utils.log_mess('POLLS', 'Create poll #1', Utils.LogColors.OKGREEN)
                 pollsInEdit.append({'username': message['from']['username'], 'chat': message['chat']['id']})
                 r = [('¿Cuál es la pregunta?\nResponde como "La pregunta es ..."', {})]
 
             elif regex1:
-                print('POLLS: CREATE POLL2')
+                # print('POLLS: CREATE POLL2')
+                Utils.log_mess('POLLS', 'Create poll #2', Utils.LogColors.OKGREEN)
                 for poll in pollsInEdit:
                     if poll['username'] == message['from']['username'] and poll['chat'] == message['chat']['id']:
                         pollsInEdit[pollsInEdit.index(poll)].update({'title': regex1.group(1)})
@@ -38,7 +42,8 @@ def handle_message(update):
                         r = [('Ahora dime las opciones separadas por comas', {})]
                         break
             elif len(regex2) > 0:
-                print('POLLS: CREATE POLL3')
+                # print('POLLS: CREATE POLL3')
+                Utils.log_mess('POLLS', 'Create poll #3', Utils.LogColors.OKGREEN)
                 for poll in pollsInEdit:
                     if poll['username'] == message['from']['username'] and poll['chat'] == message['chat']['id']:
                         respo = {}
@@ -57,20 +62,24 @@ def handle_message(update):
         else:
             r = [('You told me "' + message['text'] + '"', {})]
 
-    print('MSG_RESPONSE: ' + str(update['update_id']))
-    print('MSG_RESPONSE: ' + str(r))
-    print('POLLS: In edit ' + str(pollsInEdit))
+    # print('MSG_RESPONSE: ' + str(update['update_id']))
+    Utils.log_mess('MSG_RESPONSE', str(update['update_id']))
+    # print('MSG_RESPONSE: ' + str(r))
+    Utils.log_mess('MSG_RESPONSE', str(r))
+    # print('POLLS: In edit ' + str(pollsInEdit))
+    Utils.log_mess('POLLS', 'In edit ' + str(pollsInEdit), Utils.LogColors.OKGREEN)
     return r
 
 
 def handle_callback(update):
     callback = update['callback_query']
-    print('CALLBACK_RESPONSE: ' + str(update['update_id']))
-
+    # print('CALLBACK_RESPONSE: ' + str(update['update_id']))
+    Utils.log_mess('CALLBACK', 'Response to ' + str(update['update_id']), Utils.LogColors.OKBLUE)
     poll_id = int(callback['data'].split(':::')[0])
     option = callback['data'].split(':::')[1]
 
     polls[poll_id]['options'][option] += 1
 
-    print('POLLS: ' + str(polls))
+    # print('POLLS: ' + str(polls))
+    Utils.log_mess('POLLS', 'str(polls)', Utils.LogColors.OKGREEN)
     return Utils.send_callback(callback['id'], {}).json()
