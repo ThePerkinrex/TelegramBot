@@ -5,7 +5,7 @@ import MessageHandler as MHandler
 import Utils
 
 
-url = "https://api.telegram.org/bot479189806:AAFgwI7drgzRoXTGnoCxgrFyfWcUxKP1Wlc/"
+url = Utils.url
 
 
 # chat_id = Utils.get_chat_id(Utils.last_update(Utils.get_updates_json(url)))
