@@ -139,5 +139,14 @@ def inte(codename, lang):
     f.close()
     reg = re.search(regex, langf)
     if reg:
+        print(lang)
         return reg.group(1)
-    return codename + '.' + lang
+    else:
+        regex = codename + '.en-US = (.*)\n'
+        reg = re.search(regex, langf)
+        if reg:
+            print('en-US')
+            return reg.group(1)
+        else:
+            print('CODE:', codename, lang)
+            return codename + '.' + lang

@@ -30,7 +30,7 @@ def handle_message(update, lang):
                 # print('POLLS: CREATE POLL1')
                 Utils.log_mess('POLLS', 'Create poll #1', Utils.LogColors.OKGREEN)
                 pollsInEdit.append({'username': message['from']['username'], 'chat': message['chat']['id']})
-                r = [(Utils.inte('what_question', lang) + '\nResponde como "La pregunta es ..."', {})]
+                r = [(Utils.inte('what_question', lang) + '\n' + Utils.inte('answer_what_q', lang), {})]
 
             elif regex1:
                 # print('POLLS: CREATE POLL2')

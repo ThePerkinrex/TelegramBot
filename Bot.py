@@ -11,9 +11,9 @@ validlang = ['en-US', 'es-ES']
 
 args = sys.argv
 # print('PASSED ARGS: ' + str(args))
-
-if args[1] in validlang:
-    lang = args[1]
+if len(args) > 1:
+    if args[1] in validlang:
+        lang = args[1]
 
 
 
