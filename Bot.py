@@ -25,7 +25,7 @@ Utils.log_mess('SETUP', 'Bot initialized in ' + lang, Utils.LogColors.SETUP + Ut
 
 def stop_bot():
     # print('END_PRC: STOPPING BOT')
-    Utils.log_mess('END_PRC', 'Stopping bot', Utils.LogColors.FAIL)
+    Utils.log_mess('END_PRC', Utils.LogColors.FAIL + Utils.LogColors.BOLD + 'Stopping bot', Utils.LogColors.FAIL + Utils.LogColors.BOLD)
     exit(0)
 
 
@@ -49,7 +49,7 @@ def main():
                         Utils.log_mess('MSG', str(mess))
                         if mess == 'NONE':
                             response = Utils.send_mess(Utils.get_chat_id(update), Utils.inte('stopbot', lang))
-                            break
+                            stop_bot()
                         else:
                             response = Utils.send_mess(Utils.get_chat_id(update), mess[0], mess[1])
                     if response:
