@@ -28,8 +28,10 @@ class LogColors:
     OKBLUE = '\033[94m'  # UPDATE & CALLBACK RELATED
     OKGREEN = '\033[92m'  # POLLS RELATED
     RESPONSE = '\033[1;36m'  # RESPONSE RELATED
+    LANG = '\033[1;34m'  # TRANSLATION
     WARNING = '\033[93m'  # WARNINGS
     FAIL = '\033[91m'  # ERRORS & END
+    SETUP = '\033[32m'  # SETUP
     ENDC = '\033[0m'
     BOLD = '\033[1m'
     UNDERLINE = '\033[4m'
@@ -133,20 +135,21 @@ def get_test_keyboard():
 
 
 def inte(codename, lang):
-    regex = codename + '.' + lang + ' = (.*)\n'
+    log_mess('LANG', 'Asked for ' + codename + '.' + lang, LogColors.LANG)
+    regex = '\\b' + codename + '.' + lang + ' = (.*)\n'
     f = open(msglangfile)
     langf = f.read()
     f.close()
     reg = re.search(regex, langf)
     if reg:
-        print(lang)
+        log_mess('LANG', codename + '.' + lang + ' --> ' + reg.group(1), LogColors.LANG)
         return reg.group(1)
     else:
         regex = codename + '.en-US = (.*)\n'
         reg = re.search(regex, langf)
         if reg:
-            print('en-US')
+            log_mess('LANG', codename + '.en-US --> ' + reg.group(1), LogColors.LANG)
             return reg.group(1)
         else:
-            print('CODE:', codename, lang)
+            log_mess('LANG', codename + '.' + lang, LogColors.LANG)
             return codename + '.' + lang

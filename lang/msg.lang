@@ -16,3 +16,15 @@ what_question.es-ES = ¿Cuál es la pregunta?
 answer_what_q.en-US = Answer like "The question is ..."
 answer_what_q.es-ES = Responde como "La pregunta es ..."
 
+answer_comma.en-US = Now tell me the options separated by commas
+answer_comma.es-ES = Ahora dime las opciones separadas por comas
+
+poll_ok.en-US = OK, the poll is created
+poll_ok.es-ES = OK, la encuesta está creada
+
+poll.en-US = Poll
+poll.es-ES = Encuesta
+
+told_me.en-US = You told me
+told_me.es-ES = Me dijiste
+

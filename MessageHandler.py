@@ -1,9 +1,10 @@
 import Utils
 import re
 
+import bot_token
+
 polls = []
 pollsInEdit = []
-
 
 def handle_message(update, lang):
     # print('UPDATE: ' + str(update))
@@ -12,7 +13,7 @@ def handle_message(update, lang):
     r = [(Utils.inte('cancreatepolls', lang), {})]
 
     message = update['message']
-    if message['text'] == '/stop':
+    if message['text'] == '/stop' or message['text'] == '/stop@' + bot_token.bot_id:
         r = ['NONE', 'NONE']
     else:
         if message['chat']['type'] == 'group':
@@ -39,7 +40,7 @@ def handle_message(update, lang):
                     if poll['username'] == message['from']['username'] and poll['chat'] == message['chat']['id']:
                         pollsInEdit[pollsInEdit.index(poll)].update({'title': regex1.group(1)})
 
-                        r = [('Ahora dime las opciones separadas por comas', {})]
+                        r = [(Utils.inte('answer_comma', lang), {})]
                         break
             elif len(regex2) > 0:
                 # print('POLLS: CREATE POLL3')
@@ -53,14 +54,14 @@ def handle_message(update, lang):
                         pollsInEdit[pollsInEdit.index(poll)].update({'options': respo})
                         polls.append(pollsInEdit[pollsInEdit.index(poll)])
                         pollsInEdit.remove(pollsInEdit[pollsInEdit.index(poll)])
-                        r = [('Bien, se ha creado la encuesta', {}), ('Encuesta: ' + poll['title'],
+                        r = [(Utils.inte('poll_ok', lang), {}), (Utils.inte('poll', lang) + ': ' + poll['title'],
                                                                  Utils.generate_poll(polls.index(poll),
                                                                                      list(poll['options'].keys())))]
                         break
             else:
-                r = [('I can crete polls', {})]
+                r = [(Utils.inte('cancreatepolls', lang), {})]
         else:
-            r = [('You told me "' + message['text'] + '"', {})]
+            r = [(Utils.inte('told_me', lang) + ' "' + message['text'] + '"', {})]
 
     # print('MSG_RESPONSE: ' + str(update['update_id']))
     Utils.log_mess('MSG_RESPONSE', str(update['update_id']))
@@ -81,5 +82,5 @@ def handle_callback(update):
     polls[poll_id]['options'][option] += 1
 
     # print('POLLS: ' + str(polls))
-    Utils.log_mess('POLLS', 'str(polls)', Utils.LogColors.OKGREEN)
+    Utils.log_mess('POLLS', str(polls), Utils.LogColors.OKGREEN)
     return Utils.send_callback(callback['id'], {}).json()

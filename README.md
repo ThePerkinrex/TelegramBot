@@ -19,9 +19,10 @@ End the poll #
 
 ## How do I run it
 
-You need to create a file named `bot_token.py` where you need to add your bot's token in the format:
+You need to create a file named `bot_token.py` where you need to add your bot's token and username in the format:
 ```python
-t = 'botToken'
+t = 'botToken'  # The bot's token
+bot_id = 'username'  # The bot's username
 ```
 
 Also you'll need to install the requests python module. You can do this through pip for example

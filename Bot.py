@@ -20,6 +20,8 @@ if len(args) > 1:
 # chat_id = Utils.get_chat_id(Utils.last_update(Utils.get_updates_json(url)))
 # Utils.send_mess(chat_id, 'Telegram Bot On')
 
+Utils.log_mess('SETUP', 'Bot initialized in ' + lang, Utils.LogColors.SETUP + Utils.LogColors.BOLD)
+
 
 def stop_bot():
     # print('END_PRC: STOPPING BOT')
@@ -52,7 +54,7 @@ def main():
                             response = Utils.send_mess(Utils.get_chat_id(update), mess[0], mess[1])
                     if response:
                         # print('RESPONSE: ' + str(response.json()))
-                        Utils.log_mess('RESPONSE', str(response.json()), Utils.LogColors.RESPONSE)
+                        Utils.log_mess('RESPONSE', str(response.json()) + '\n\n', Utils.LogColors.RESPONSE)
                     else:
                         # print('STOPPING')
                         stop_bot()
@@ -62,7 +64,7 @@ def main():
                     Utils.log_mess('CALLBACK', 'Query ' + str(callback_query), Utils.LogColors.OKBLUE)
                     r = MHandler.handle_callback(update)
                     # print('CALLBACK: ' + str(r))
-                    Utils.log_mess('CALLBACK', str(r), Utils.LogColors.OKBLUE)
+                    Utils.log_mess('CALLBACK', str(r) + '\n\n', Utils.LogColors.OKBLUE)
 
                     # name = 'You'
                     # if callback_query.get('from').get('username'):
