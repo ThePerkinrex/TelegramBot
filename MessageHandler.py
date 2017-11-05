@@ -5,11 +5,11 @@ polls = []
 pollsInEdit = []
 
 
-def handle_message(update):
+def handle_message(update, lang):
     # print('UPDATE: ' + str(update))
     Utils.log_mess('UPDATE', str(update), Utils.LogColors.OKBLUE)
 
-    r = [('Puedo crear encuestas', {})]
+    r = [(Utils.inte('cancreatepolls', lang), {})]
 
     message = update['message']
     if message['text'] == '/stop':
@@ -22,15 +22,15 @@ def handle_message(update):
             # print(keyboard)
             # r = [('Tell me A or B', keyboard)]
             # print('MSG_RESPONSE: ' + str(update['update_id']))
-            regex1 = re.match('la pregunta es (.+)', message['text'].lower())
+            regex1 = re.match(Utils.inte('question', lang).lower() + ' (.+)', message['text'].lower())
             regex2 = re.split('\s*,\s*', message['text'])
             # print('MSG_HANDLER: MSG IS ' + message['text'])
             Utils.log_mess('MSG_HANDLER', 'MSG is ' + message['text'])
-            if message['text'].lower() == 'crea una encuesta':
+            if message['text'].lower() == Utils.inte('createpoll', lang).lower():
                 # print('POLLS: CREATE POLL1')
                 Utils.log_mess('POLLS', 'Create poll #1', Utils.LogColors.OKGREEN)
                 pollsInEdit.append({'username': message['from']['username'], 'chat': message['chat']['id']})
-                r = [('¿Cuál es la pregunta?\nResponde como "La pregunta es ..."', {})]
+                r = [(Utils.inte('what_question', lang) + '\nResponde como "La pregunta es ..."', {})]
 
             elif regex1:
                 # print('POLLS: CREATE POLL2')

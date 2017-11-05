@@ -6,6 +6,15 @@ import Utils
 
 
 url = Utils.url
+lang = 'en-US'
+validlang = ['en-US', 'es-ES']
+
+args = sys.argv
+# print('PASSED ARGS: ' + str(args))
+
+if args[1] in validlang:
+    lang = args[1]
+
 
 
 # chat_id = Utils.get_chat_id(Utils.last_update(Utils.get_updates_json(url)))
@@ -29,7 +38,7 @@ def main():
             if update is not None:
                 if update.get('message'):
                     # Utils.send_mess(Utils.get_chat_id(update), MHandler.handleMessage(update))
-                    r = MHandler.handle_message(update)
+                    r = MHandler.handle_message(update, lang)
                     # print('HANDLED_MSG: ' + str(r))
                     Utils.log_mess('HANDLED_MSG', str(r))
                     response = 'none'
@@ -37,7 +46,7 @@ def main():
                         # print('MSG: ' + str(mess))
                         Utils.log_mess('MSG', str(mess))
                         if mess == 'NONE':
-                            response = Utils.send_mess(Utils.get_chat_id(update), )
+                            response = Utils.send_mess(Utils.get_chat_id(update), Utils.inte('stopbot', lang))
                             break
                         else:
                             response = Utils.send_mess(Utils.get_chat_id(update), mess[0], mess[1])

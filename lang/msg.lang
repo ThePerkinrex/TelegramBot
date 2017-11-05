@@ -1,0 +1,16 @@
+stopbot.en-US = Stopping bot
+stopbot.es-ES = Parando el bot
+
+cancreatepoll.en-US = I can crete polls
+cancreatepoll.es-ES = Puedo crear encuestas
+
+question.en-US = The question is
+question.es-ES = La pregunta es
+
+createpoll.en-US = Create a poll
+createpoll.es-ES = Crea una encuesta
+
+what_question.en-US = What is the question?
+what_question.es-ES = ¿Cuál es la pregunta?
+
+answer_what_q.en-US = Answer like "The question is ..."

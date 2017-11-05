@@ -1,8 +1,10 @@
 import requests
 import bot_token
+import re
 
 url = 'https://api.telegram.org/bot' + bot_token.t + '/'  # Your bot's token
 maxlen = 20
+msglangfile = 'lang/msg.lang'
 
 
 def r_align(n, t):
@@ -128,3 +130,14 @@ def get_custom_button(text, custom=None):
 
 def get_test_keyboard():
     return '{"inline_keyboard": [[{"text": "A", "callback_data": "Poll1|-->|A"}, {"text": "B", "callback_data": "B"}]]}'
+
+
+def inte(codename, lang):
+    regex = codename + '.' + lang + ' = (.*)\n'
+    f = open(msglangfile)
+    langf = f.read()
+    f.close()
+    reg = re.search(regex, langf)
+    if reg:
+        return reg.group(1)
+    return codename + '.' + lang

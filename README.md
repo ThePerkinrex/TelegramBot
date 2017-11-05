@@ -39,6 +39,6 @@ After all that you only need to run it through python version 3
 python3 installdir/Bot.py lang
 ```
 being `python3` your python version 3 installation, `installdir` the local directory for this repository and `lang` the language of the bot.
-Currently, the language can be `ENG` for english and `ESP` for spanish. The spanish commands can be found [here](docs/ESP_Commands.md).
+Currently, the language can be `en-US` for english and `es-ES` for spanish. The spanish commands can be found [here](docs/ESP_Commands.md).
 
 **And you're done and the bot is running** :+1: :+1:
