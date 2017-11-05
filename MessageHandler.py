@@ -57,6 +57,7 @@ def handle_message(update, lang):
                         r = [(Utils.inte('poll_ok', lang), {}), (Utils.inte('poll', lang) + ': ' + poll['title'],
                                                                  Utils.generate_poll(polls.index(poll),
                                                                                      list(poll['options'].keys())))]
+                        # TODO: Add the poll number and be able to end it
                         break
             else:
                 r = [(Utils.inte('cancreatepolls', lang), {})]
