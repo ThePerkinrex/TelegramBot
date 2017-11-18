@@ -25,6 +25,7 @@ def handle_message(update, lang):
             # print('MSG_RESPONSE: ' + str(update['update_id']))
             regex1 = re.match(Utils.inte('question', lang).lower() + ' (.+)', message['text'].lower())
             regex2 = re.split('\s*,\s*', message['text'])
+            regex3 = re.match(Utils.inte('end_poll', lang) + ' (\d+)', message['text'].lower())  # FIXME: This regex
             # print('MSG_HANDLER: MSG IS ' + message['text'])
             Utils.log_mess('MSG_HANDLER', 'MSG is ' + message['text'])
             if message['text'].lower() == Utils.inte('createpoll', lang).lower():
@@ -54,11 +55,18 @@ def handle_message(update, lang):
                         pollsInEdit[pollsInEdit.index(poll)].update({'options': respo})
                         polls.append(pollsInEdit[pollsInEdit.index(poll)])
                         pollsInEdit.remove(pollsInEdit[pollsInEdit.index(poll)])
-                        r = [(Utils.inte('poll_ok', lang), {}), (Utils.inte('poll', lang) + ': ' + poll['title'],
-                                                                 Utils.generate_poll(polls.index(poll),
-                                                                                     list(poll['options'].keys())))]
-                        # TODO: Add the poll number and be able to end it
+                        r = [(Utils.inte('poll_ok', lang), {}),
+                             (Utils.inte('poll', lang) + ' #' + str(polls.index(poll)) + ': ' + poll['title'],
+                              Utils.generate_poll(polls.index(poll),
+                                                  list(poll['options'].keys())))]
                         break
+            elif regex3:
+                Utils.log_mess('POLLS', 'END POLL', Utils.LogColors.OKGREEN)
+                n = int(regex3.group(1))
+                if n < len(polls):
+                    # end_poll = polls.pop(n)
+                    pass
+
             else:
                 r = [(Utils.inte('cancreatepolls', lang), {})]
         else:

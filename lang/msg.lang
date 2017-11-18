@@ -28,3 +28,6 @@ poll.es-ES = Encuesta
 told_me.en-US = You told me
 told_me.es-ES = Me dijiste
 
+end_poll.en-US = End the poll
+end_poll.es-ES = Termina la encuesta
+
